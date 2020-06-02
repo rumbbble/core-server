@@ -57,8 +57,13 @@ const server = new ApolloServer({
   introspection: true,
 });
 
-app.get("/test", (req,res)=>{
-  console.log(mongoose.connection.readyState);
+app.get("/test", async (req,res)=>{
+  const { model } = mongoose
+  res.json({ posts: await model("posts").find() })
+  // await model("posts").remove({})
+  // await model("users").remove({})
+  // await model("comments").remove({})
+  // await model("likes").remove({})
   
   res.end();
 })
@@ -71,3 +76,5 @@ app.listen(port, () =>
     `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
   )
 );
+// const seedData = require('./seeders')();
+// console.log('generated', seedData)
