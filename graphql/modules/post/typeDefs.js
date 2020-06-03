@@ -1,15 +1,19 @@
 const { gql } = require("apollo-server-express");
 module.exports = gql`
   type Post {
+    id: ID
     title: String!
     author: User!
     description: String
     repoURL: String
     demoURL: String
     image: String!
+    likeCount: Int
+    comments: [Comment]
+    likes: [Like]
+    likedByUser: Boolean
     createdAt: String
     updatedAt: String
-    id: ID
   }
   extend type Query {
     posts: [Post]

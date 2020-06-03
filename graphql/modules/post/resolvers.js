@@ -23,5 +23,20 @@ module.exports = {
     author: async (parent) => {
       return await User.findById(parent.author);
     },
+    comments: async (parent) => {
+      return await Comment.find({ post: parent.id });
+    },
+    likes: async(parent) => {
+      return await Like.find({ post: parent.id })
+    },
+    // this will determine whether or not the post is liked by the auhenticated user or not
+    likedByUser: async(parent, { user }) => {
+      const like = await Like.findOne({ post: parent.id, user })
+      if(like) return true
+      else return false
+    },
+    likeCount: async(parent) => {
+      return await Like.countDocuments({ post: parent.id })
+    }
   }
 };
